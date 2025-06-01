@@ -22,7 +22,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   };
 
   const openTelegram = () => {
-    window.open('https://t.me/your_bot', '_blank');
+    window.open('https://t.me/booling_machine_bot', '_blank');
   };
 
   return (
