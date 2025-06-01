@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://web-4.free.beeceptor.com'

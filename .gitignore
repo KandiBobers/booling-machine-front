@@ -1,0 +1,10 @@
+# Файлы зависимостей
+/node_modules
+
+# Логи и кэш
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+.vscode
