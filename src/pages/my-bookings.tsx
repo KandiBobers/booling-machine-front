@@ -20,14 +20,12 @@ const MyBookingsPage: React.FC<MyBookingsPageProps> = ({
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [notification, setNotification] = useState<{message: string; isSuccess: boolean} | null>(null);
 
-  // Редирект если не авторизован
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/login');
     }
   }, [isLoggedIn, router]);
 
-  // Загрузка бронирований
   useEffect(() => {
     if (!isLoggedIn) return;
 
@@ -63,7 +61,6 @@ const MyBookingsPage: React.FC<MyBookingsPageProps> = ({
   const handleEditComplete = (success: boolean, message: string) => {
     if (success) {
       setEditingBooking(null);
-      // Обновляем список бронирований
       getBookings(username, password).then(data => setBookings(data));
     }
     showNotification(message, success);

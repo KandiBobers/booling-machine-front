@@ -13,7 +13,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ isLoggedIn, onLogin }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  // Редирект если уже авторизован
   React.useEffect(() => {
     if (isLoggedIn) {
       router.push('/');
@@ -26,7 +25,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ isLoggedIn, onLogin }) => {
     const success = await login(username, password);
     if (success) {
       onLogin(username, password);
-      router.push('/'); // Перенаправляем на главную после успешного входа
+      router.push('/');
     } else {
       setError('Неверный логин или пароль');
     }
@@ -36,7 +35,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ isLoggedIn, onLogin }) => {
     window.open('https://t.me/booling_machine_bot', '_blank');
   };
 
-  if (isLoggedIn) return null; // Или можно возвращать null пока идет редирект
+  if (isLoggedIn) return null;
 
   return (
     <div className="login-container">

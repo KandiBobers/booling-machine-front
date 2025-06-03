@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    /* Base Options */
     "target": "es5",
     "lib": [
       "dom",
@@ -16,17 +15,14 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    /* Paths */
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
       ]
     },
-    /* Emit */
     "incremental": true,
     "noEmit": true,
-    /* Type Checking */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

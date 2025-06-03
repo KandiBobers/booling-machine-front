@@ -15,10 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleLogout = () => {
     setAuthData({ username: '', password: '' });
     setIsLoggedIn(false);
-    window.location.href = '/login'; // Перенаправляем после выхода
+    window.location.href = '/login';
   };
 
-  // Логика защиты маршрутов теперь будет в самих страницах
   return (
     <div className="app">
       {isLoggedIn && <Header onLogout={handleLogout} />}

@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
 
   const handleLogout = () => {
     onLogout();
-    router.push('/login'); // Перенаправляем на страницу входа после выхода
+    router.push('/login');
   };
 
   return (
