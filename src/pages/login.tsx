@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { login } from '../api/auth';
 
 interface LoginPageProps {
+  isLoggedIn: boolean;
   onLogin: (username: string, password: string) => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ isLoggedIn, onLogin }) => {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  // Редирект если уже авторизован
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/');
+    }
+  }, [isLoggedIn, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +26,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     const success = await login(username, password);
     if (success) {
       onLogin(username, password);
+      router.push('/'); // Перенаправляем на главную после успешного входа
     } else {
       setError('Неверный логин или пароль');
     }
@@ -24,6 +35,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const openTelegram = () => {
     window.open('https://t.me/booling_machine_bot', '_blank');
   };
+
+  if (isLoggedIn) return null; // Или можно возвращать null пока идет редирект
 
   return (
     <div className="login-container">

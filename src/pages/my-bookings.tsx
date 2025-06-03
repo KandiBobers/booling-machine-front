@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { getBookings, cancelBooking, editBooking } from '../api/bookings';
 import { Booking } from '../types/booking';
 import EditBookingModal from '../components/EditBookingModal';
 
 interface MyBookingsPageProps {
-  username: string;
-  password: string;
+  isLoggedIn: boolean;
+  authData: { username: string; password: string };
 }
 
-const MyBookingsPage: React.FC<MyBookingsPageProps> = ({ username, password }) => {
+const MyBookingsPage: React.FC<MyBookingsPageProps> = ({ 
+  isLoggedIn, 
+  authData: { username, password } 
+}) => {
+  const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
   const [notification, setNotification] = useState<{message: string; isSuccess: boolean} | null>(null);
 
+  // Редирект если не авторизован
   useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
+
+  // Загрузка бронирований
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
     const fetchBookings = async () => {
       try {
         const data = await getBookings(username, password);
@@ -29,7 +44,7 @@ const MyBookingsPage: React.FC<MyBookingsPageProps> = ({ username, password }) =
     };
 
     fetchBookings();
-  }, [username, password]);
+  }, [isLoggedIn, username, password]);
 
   const handleCancel = async (roomId: number, date: string) => {
     try {
@@ -59,6 +74,7 @@ const MyBookingsPage: React.FC<MyBookingsPageProps> = ({ username, password }) =
     setTimeout(() => setNotification(null), 3000);
   };
 
+  if (!isLoggedIn) return null;
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>{error}</div>;
 

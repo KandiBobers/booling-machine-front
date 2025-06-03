@@ -1,5 +1,11 @@
 # Файлы зависимостей
-/node_modules
+node_modules/
+.next/
+out/
+
+# Локальные настройки
+.env*.local
+.env
 
 # Логи и кэш
 npm-debug.log*
@@ -7,4 +13,48 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-.vscode
+# Системные файлы
+.DS_Store
+*.pem
+
+# Тестовые покрытия
+coverage/
+.nyc_output/
+
+# IDE
+.vscode/
+.idea/
+
+# Конфигурации
+*.local
+*.log
+*.tmp
+*.temp
+
+# Сгенерированные файлы
+.next/
+dist/
+
+# TypeScript кэш
+.tsbuildinfo
+
+# Дополнительные настройки
+*.swp
+*.swo
+*~
+
+# Next.js специфичные
+.next/cache/
+.next/plugins/
+.next/server/
+.next/static/
+
+# Переменные окружения (кроме шаблонов)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Исключения (но включаем важные конфиги)
+!.env.example

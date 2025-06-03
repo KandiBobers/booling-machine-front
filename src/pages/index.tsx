@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { getRooms } from '../api/rooms';
 import { Room } from '../types/room';
 import BookingModal from '../components/BookingModal';
 import RoomCard from '../components/RoomCard';
 
 interface HomePageProps {
-  username: string;
-  password: string;
+  isLoggedIn: boolean;
+  authData: { username: string; password: string };
 }
 
-const HomePage: React.FC<HomePageProps> = ({ username, password }) => {
+const HomePage: React.FC<HomePageProps> = ({ isLoggedIn, authData }) => {
+  const router = useRouter();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -17,9 +19,17 @@ const HomePage: React.FC<HomePageProps> = ({ username, password }) => {
   const [bookingResult, setBookingResult] = useState<{success: boolean; message: string} | null>(null);
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, [isLoggedIn, router]);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
     const fetchRooms = async () => {
       try {
-        const data = await getRooms(username, password);
+        const data = await getRooms(authData.username, authData.password);
         setRooms(data);
       } catch (err) {
         setError('Ошибка при загрузке комнат');
@@ -30,7 +40,7 @@ const HomePage: React.FC<HomePageProps> = ({ username, password }) => {
     };
 
     fetchRooms();
-  }, [username, password]);
+  }, [isLoggedIn, authData.username, authData.password]);
 
   const handleBookClick = (room: Room) => {
     setSelectedRoom(room);
@@ -44,6 +54,7 @@ const HomePage: React.FC<HomePageProps> = ({ username, password }) => {
     }
   };
 
+  if (!isLoggedIn) return null;
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>{error}</div>;
 
@@ -71,8 +82,8 @@ const HomePage: React.FC<HomePageProps> = ({ username, password }) => {
           roomName={selectedRoom.name}
           onClose={() => setSelectedRoom(null)}
           onBook={handleBookingComplete}
-          username={username}
-          password={password}
+          username={authData.username}
+          password={authData.password}
         />
       )}
     </div>
