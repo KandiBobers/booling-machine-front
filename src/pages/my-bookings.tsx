@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getBookings, cancelBooking, editBooking } from '../api/bookings';
+import { getBookings, cancelBooking } from '../api/bookings';
 import { Booking } from '../types/booking';
 import EditBookingModal from '../components/EditBookingModal';
 
