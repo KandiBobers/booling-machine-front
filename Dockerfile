@@ -17,7 +17,6 @@ COPY src ./src
 # Build the project
 RUN npm run build
 
-Expose the port your app runs on (if needed)
 EXPOSE 8000
 
 # Command to run the application
